@@ -16,5 +16,6 @@ class MyspiderItem(scrapy.Item):
 class articleItem(scrapy.Item):
     title = scrapy.Field()
     link = scrapy.Field()
-    src = scrapy.Field()
+    where = scrapy.Field()
+    where_link = scrapy.Field()
     pubDate = scrapy.Field()

@@ -1,0 +1,33 @@
+{
+  "sites": [
+    {
+      "domain": "cnbeta.com",
+      "enabled": "True",
+      "name": "cnBeta.COM",
+      "url": "http://www.cnbeta.com",
+      "xpath_article": "//*[@id='allnews_all']//*[@class='title']/a/@href",
+      "xpath_content": "",
+      "xpath_pubDate": "//*[@class='date']/text()",
+      "xpath_title": "//*[@id='news_title']/text()",
+      "xpath_visit": "",
+      "xpath_where": [ "//*[@class='where']/a/text()", "//*[@class='where']/text()" ],
+      "where_replacer": "稿源：",
+      "xpath_where_link": "//*[@class='where']/a/@href",
+      "last_visit": ""
+    },
+    {
+      "domain": "huxiu.com",
+      "enabled": "True",
+      "name": "虎嗅",
+      "url": "http://www.huxiu.com/whatsnew.html?f=nav_index_whatsnew",
+      "xpath_article": "//*[@class='mod-info-flow']//h3/a/@href",
+      "xpath_pubDate": "//*[@class='article-time']/text()",
+      "xpath_title": "//*[@class='t-h1']/text()",
+      "xpath_visit": "",
+      "xpath_where": [ ],
+      "where_replacer": "",
+      "xpath_where_link": "",
+      "last_visit": ""
+    }
+  ]
+}
