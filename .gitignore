@@ -1,2 +1,6 @@
+# To ignore ecllipse generated projects files.
 .project
 .pydevproject
+*.pyc
+.settings/
+mySpider/output/*.*
