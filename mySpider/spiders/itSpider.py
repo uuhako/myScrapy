@@ -7,27 +7,33 @@ from scrapy.linkextractors import LinkExtractor
 
 from items import articleItem
 
-class ItSpider(CrawlSpider):
+class ItSpider(scrapy.Spider):
     name = 'ItSpider'
     allowed_domains = ['cnbeta.com']
     start_urls = ['http://www.cnbeta.com']
 
-    rules = (
-#         Rule(LinkExtractor(allow=('/article/', ))),
+    def parse(self, response):
+        for article in response.css('#allnews_all .title'):
+            href = article.css('a::attr(href)')
+            full_url = response.urljoin(href[0].extract())
+#             yield scrapy.Request(full_url, callback=self.parse_item)
+            yield self.parse_from_mainpage(article, response)
 
-        Rule(LinkExtractor(allow=('article', )), callback='parse_item'),
-    )
-
-    def parse_item(self, response):
-        self.logger.info('Hi, this is an item page! %s', response.url)
+    def parse_from_mainpage(self, article, response):
+        href = article.css('a::attr(href)')
+        full_url = response.urljoin(href[0].extract())
+        item = articleItem()
+        item['title'] = article.css('a::text')[0].extract().encode('gbk')
+        item['link'] = full_url
+        item['src'] = None
+        item['pubDate'] = article.css('span > em::text')[0].extract()
+        return item
         
-#         print response.xpath('//*[@id="news_title"]/text()')[0].extract()
-#         
+    def parse_item(self, response):
+        self.logger.info('Hi, this is an item page! %s', response.url)       
         item = articleItem()
         item['title'] = response.xpath('//*[@id="news_title"]/text()')[0].extract().encode('gbk')
-        print item['title']
-        item['link'] = None
-        item['src'] = None
-        item['pubDate'] = None
-#         print item
+        item['link'] = response.url
+        item['src'] = response.xpath('//*[@class="where"]/a/text()')[0].extract().encode('gbk')
+        item['pubDate'] = response.xpath('//*[@class="date"]/text()')[0].extract().encode('gbk')
         return item
